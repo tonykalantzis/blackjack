@@ -1,2 +1,2 @@
-# blackjack
-A niche terminal gambling game ;P
+# The Blackjack Project **♣**
+TOP Blackjack

@@ -9,9 +9,12 @@ MAKE += --silent
 CXX = g++
 CXXFLAGS = -Wall -Werror -g -O0 -I$(INCLUDE)
 
-# .o and executable
-EXEC = exec
-OBJS = $(SRC)/Card.o $(SRC)/Deck.o $(SRC)/Player.o $(SRC)/Blackjack.o $(SRC)/main.o
+# executable
+EXEC = blackjack
+
+# source and object files
+SRCS = $(wildcard $(SRC)/*.cpp)
+OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
 all: run clean
 

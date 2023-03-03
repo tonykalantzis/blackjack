@@ -29,6 +29,7 @@ public:
     string get_name() const;
 
     void draw(Deck&);
+    void draw_two(Deck&);
     void draw_fake(Card&);
     void print_hand();
     const vector<Card>& return_hand_cards() const;

@@ -70,6 +70,24 @@ void Player::draw(Deck& deck) {
         print_hand();
 }
 
+void Player::draw_two(Deck& deck) { // used at the start of player's turn. makes printing prettier :p
+    // apla ebala thn draw se ena loop gia na to kanei 2 fores lol :p
+    for (int i = 0 ; i < 2 ; i++) {
+        Card card = deck.get_top_card();
+        hand.push_back(card);
+        cards_in_hand++;
+        if (card.get_rank() == std::to_string(Card::ACE)) {
+            number_of_aces++;
+            if (number_of_aces > 1)
+                hand_value -= 10;
+        }
+        hand_value += card.get_points();
+    }
+
+    std::cout << get_name() << "'s hand: ";
+    print_hand();
+}
+
 void Player::print_hand() {
     for (small_int i = 0; i < cards_in_hand; i++)
         std::cout << hand[i].get_rank() << hand[i].get_suit() << " ";

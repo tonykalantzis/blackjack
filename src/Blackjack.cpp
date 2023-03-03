@@ -43,7 +43,10 @@ void Blackjack::player_turn() {
     while (!stand) {
         // ask if player wants to hit or stand
         string choice;
-        std::cout << "What will you do?" << endl << "1. Hit" << endl << "2. Stand" << endl;
+        if (Player1.get_cards_in_hand() == 2)   // player can only double after being dealt the first 2 cards
+            std::cout << "What will you do?" << endl << "1. Hit" << endl << "2. Stand" << endl << "3. Double" << endl;
+        else
+            std::cout << "What will you do?" << endl << "1. Hit" << endl << "2. Stand" << endl;
         std::cin >> choice;
 
         // if hit was chosen
@@ -84,9 +87,28 @@ void Blackjack::player_turn() {
             std::cout << Player1 << " stands at " << Player1.get_hand_value() << endl;
             stand = true;
         }
+        // if double was chosen
+        else if (choice == "3" && Player1.get_cards_in_hand() == 2) {
+            if (Player1.get_bet() > Player1.get_money())    // check if bet is legal
+                std::cout << "Not enough money to double bet." << endl << endl; 
+            else {
+                std::cout << Player1 << " doubles!" << endl;
+                Player1.double_bet();
+                Player1.draw(deck);
+
+                stand = true;   // player automatically stands after doubling
+                
+                if (Player1.get_hand_value() > 21) {    // check for busted
+                    std::cout << "Busted!" << endl;
+                    Player1.set_busted(true);
+                }
+                else 
+                    std::cout << Player1 << " stands at " << Player1.get_hand_value() << endl;
+            }
+        }
         // if invalid choice
         else {
-            std::cout << "Invalid choice. Please type 1 or 2" << endl;
+            std::cout << "Invalid choice." << endl;
             continue;
         }
     }

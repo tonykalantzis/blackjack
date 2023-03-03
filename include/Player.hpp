@@ -19,9 +19,11 @@ public:
 
     void input_bet();
     int get_bet() const;
+    void double_bet();
     int get_money() const;
     void add_money(int m = 0);
     int get_hand_value() const;
+    int get_cards_in_hand() const;
     void set_hand_value(int);
     void set_name(string);
     string get_name() const;

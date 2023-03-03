@@ -32,14 +32,20 @@ void Blackjack::round_start() {
 void Blackjack::player_turn() {
     std::cout << "-----" << Player1 <<"'s Turn-----" << endl;
 
-    // player automatically draws his first card
+    // player automatically draws his first 2 cards
     std::cout << Player1 << " draws!" << endl;
-    Player1.draw(deck);
+    Player1.draw_two(deck);
 
     string play;
 
     // get player's choice
     bool stand = false;
+
+    if (Player1.get_hand_value() == 21) { // check for blackjack
+        std::cout << "Blackjack! " << Player1 << " stands!" << endl << endl;
+        stand = true;
+    }
+
     while (!stand) {
         // ask if player wants to hit or stand
         string choice;

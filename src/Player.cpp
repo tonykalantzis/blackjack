@@ -23,6 +23,11 @@ void Player::input_bet() {
     money -= round_bet;
 }
 
+void Player::double_bet() { // used when player chooses Double
+    money -= round_bet;
+    round_bet *= 2;
+}
+
 int Player::get_bet() const {
     return round_bet;
 }
@@ -33,6 +38,10 @@ int Player::get_money() const {
 
 int Player::get_hand_value() const {
     return hand_value;
+}
+
+int Player::get_cards_in_hand() const {
+    return cards_in_hand;
 }
 
 void Player::set_name(string in_name) {

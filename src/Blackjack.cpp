@@ -9,107 +9,81 @@ Blackjack::Blackjack() {
 }
 
 void Blackjack::start() {
-    // initialize a player with 1000 starting money
+    // get the player's name
     std::cout << "Enter your name: ";
     string name;
     getline(std::cin, name);
-    Player1.set_name(name);
-    std::cout << endl;
-
-    std::cout << Player1 << " has just sat down. Starting money: " << Player1.get_money() << endl << endl;
+    player1.set_name(name);
+    std::cout << player1 << " has just sat down. Starting money: " << player1.get_money() << endl << endl;
 }
 
 void Blackjack::round_start() {
     // player inputs bet at the start of the round
-    std::cout << Player1 << "'s money: " << Player1.get_money() << endl << endl;
-    Player1.input_bet();
+    std::cout << player1 << "'s money: " << player1.get_money() << endl;
+    player1.input_bet();
     std::cout << endl;
 
     // dealer always draws the first card
-    Dealer.draw(deck);
+    dealer.draw(deck);
+    dealer.print_hand();
+    std::cout << endl;
 }
 
 void Blackjack::player_turn() {
-    std::cout << "-----" << Player1 <<"'s Turn-----" << endl;
+    std::cout << "-----" << player1 <<"'s Turn-----" << endl;
 
-    // player automatically draws his first 2 cards
-    std::cout << Player1 << " draws!" << endl;
-    Player1.draw_two(deck);
-
-    string play;
-
-    // get player's choice
     bool stand = false;
 
-    if (Player1.get_hand_value() == 21) { // check for blackjack
-        std::cout << "Blackjack! " << Player1 << " stands!" << endl << endl;
+    // player automatically draws his first 2 cards
+    std::cout << player1 << " draws!" << endl;
+    player1.draw(deck);
+    player1.draw(deck);
+    player1.print_hand();
+
+    // check for blackjack
+    if (player1.get_hand_value() == 21) {
+        std::cout << "Blackjack! " << player1 << " stands at 21!" << endl << endl;
         stand = true;
     }
 
+    // get player's choice
     while (!stand) {
         // ask if player wants to hit or stand
         string choice;
-        if (Player1.get_cards_in_hand() == 2)   // player can only double after being dealt the first 2 cards
+        if (player1.get_cards_in_hand() == 2)   // player can only double after being dealt the first 2 cards
             std::cout << "What will you do?" << endl << "1. Hit" << endl << "2. Stand" << endl << "3. Double" << endl;
         else
             std::cout << "What will you do?" << endl << "1. Hit" << endl << "2. Stand" << endl;
         std::cin >> choice;
 
+
         // if hit was chosen
         if (choice == "1") {
-            std::cout << Player1 << " hits!" << endl;
-            Player1.draw(deck);
+            std::cout << player1 << " hits!" << endl;
+            player1.draw(deck);
+            player1.print_hand();
 
-            if (Player1.get_hand_value() == 21) {
-                std::cout << Player1 << " stands at 21." << endl;
+            // check for blackjack
+            if (player1.get_hand_value() == 21) {
+                std::cout << "Blackjack! ";
                 stand = true;
-            }
-            if (Player1.get_hand_value() > 21) {
-
-                bool ace_in_hand = false;
-                // check if any aces are in hand to convert their values from 11 -> 1
-                // STILL NEEDS WORK; CODE IS INCOMPLETE
-                int count;
-                for (auto c : Player1.return_hand_cards()) {
-                    if (c.get_points() == 11) {
-                        count++;
-                        if (count > 1)
-                            Player1.set_hand_value(Player1.get_hand_value() - 10);
-                    //    Player1.set_hand_value(Player1.get_hand_value() - 10);
-                        ace_in_hand = true;
-                        break;
-                    }
-                }
-                if (ace_in_hand)
-                    continue;
-
-                std::cout << "Busted!" << endl;
-                stand = true;
-                Player1.set_busted(true);
             }
         }
         // if stand was chosen
-        else if (choice == "2") {
-            std::cout << Player1 << " stands at " << Player1.get_hand_value() << endl;
+        else if (choice == "2")
             stand = true;
-        }
         // if double was chosen
-        else if (choice == "3" && Player1.get_cards_in_hand() == 2) {
-            if (Player1.get_bet() > Player1.get_money())    // check if bet is legal
+        else if (choice == "3" && player1.get_cards_in_hand() == 2) {
+            // check if bet is legal
+            if (player1.get_bet() > player1.get_money())
                 std::cout << "Not enough money to double bet." << endl << endl; 
             else {
-                std::cout << Player1 << " doubles!" << endl;
-                Player1.double_bet();
-                Player1.draw(deck);
+                std::cout << player1 << " doubles!" << endl;
+                player1.double_bet();
+                player1.draw(deck);
+                player1.print_hand();
 
                 stand = true;   // player automatically stands after doubling
-                
-                if (Player1.get_hand_value() > 21) {    // check for busted
-                    std::cout << "Busted!" << endl;
-                    Player1.set_busted(true);
-                }
-                else 
-                    std::cout << Player1 << " stands at " << Player1.get_hand_value() << endl;
             }
         }
         // if invalid choice
@@ -117,45 +91,59 @@ void Blackjack::player_turn() {
             std::cout << "Invalid choice." << endl;
             continue;
         }
+
+        // check for busted
+        if (player1.get_hand_value() > 21) {
+            std::cout << "Busted!" << endl;
+            stand = true;
+            player1.set_busted(true);
+        }
     }
+
+    if (!player1.is_busted())
+        std::cout << player1 << " stands at " << player1.get_hand_value() << endl;
+    
     std::cout << endl;
 }
 
 void Blackjack::dealer_turn() {
     std::cout << "-----Dealer's Turn-----" << endl;
     // dealer stands at 17 and above
-    while (Dealer.get_hand_value() < 17) {
+    while (dealer.get_hand_value() < 17) {
         std::cout << "Dealer hits" << endl;
-        Dealer.draw(deck);
+        dealer.draw(deck);
+        dealer.print_hand();
         std::cout << endl;
     }
 
     // check if dealer busted and print the appropriate message
-    if (Dealer.get_hand_value() <= 21)
-        std::cout << "Dealer stands at " << Dealer.get_hand_value() << endl;
+    if (dealer.get_hand_value() < 21)
+        std::cout << "Dealer stands at " << dealer.get_hand_value() << endl;
+    else if (dealer.get_hand_value() == 21)
+        std::cout << "Blackjack! Dealer stands at 21" << endl;
     else {
-        Dealer.set_busted(true);
+        dealer.set_busted(true);
         std::cout << "Dealer busted!" << endl;
     }
     std::cout << endl;
 }
 
-string Blackjack::get_winner() {
-    // return the winner
-    if (Dealer.is_busted() && Player1.is_busted())
-        return "No one";
-    else if (Player1.is_busted() || (!Dealer.is_busted() && Dealer.get_hand_value() >= Player1.get_hand_value()))
-        return Dealer.get_name();
+void Blackjack::round_end() {
+    // print the winner
+    if (dealer.is_busted() && player1.is_busted())
+        std::cout << "No one wins..." << endl;
+    else if (player1.is_busted() || (!dealer.is_busted() && dealer.get_hand_value() >= player1.get_hand_value()))
+        std::cout << "Dealer wins..." << endl;
     else {
-        Player1.add_money(2 * Player1.get_bet());
-        return Player1.get_name();
+        player1.add_money(2 * player1.get_bet());
+        std::cout << player1 <<  " wins!" << endl;
     }
 }
 
 bool Blackjack::end() {
     // check if out of money
-    if (Player1.get_money() <= 0) {
-        std::cout << Player1 << " is out of money. Game ends." << endl;
+    if (player1.get_money() <= 0) {
+        std::cout << player1 << " is out of money. Game ends." << endl;
         return true;
     }
 
@@ -173,8 +161,8 @@ bool Blackjack::end() {
         return true;
     // else, reset all hands and return false 
     else {   
-        Player1.reset();
-        Dealer.reset();
+        player1.reset();
+        dealer.reset();
         return false;
     }
 }

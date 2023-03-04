@@ -2,7 +2,7 @@
 
 Blackjack::Blackjack() {
     // intro
-    std::cout << "Welcome to BrainShaker Blackjack!" << endl << endl;
+    std::cout << "Welcome to Blackjack!" << endl << endl;
 
     //shuffle the deck
     deck.shuffle_deck();
@@ -118,7 +118,6 @@ void Blackjack::player_turn() {
             continue;
         }
     }
-
     std::cout << endl;
 }
 

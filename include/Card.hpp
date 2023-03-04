@@ -22,6 +22,14 @@ public:
     void set_status(Status);
     void print_2d();
 
+    //rendering 6 part of a card
+    void print_one();
+    void print_two();
+    void print_three();
+    void print_four();
+    void print_five();
+    void print_six();
+
 private:
     Rank rank;
     Suit suit;

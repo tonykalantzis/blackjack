@@ -32,6 +32,7 @@ public:
     void draw_two(Deck&);
     void draw_fake(Card&);
     void print_hand();
+    void print_hand_2d();
     const vector<Card>& return_hand_cards() const;
     void print_dealer_hand();
 

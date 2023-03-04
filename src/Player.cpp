@@ -63,11 +63,11 @@ void Player::draw(Deck& deck) {
     }
     hand_value += card.get_points();
 
-    std::cout << get_name() << "'s hand: ";
+    std::cout << get_name() << "'s hand:\n";
     if (get_name() == "Dealer")
-        print_dealer_hand();
+        print_hand_2d();
     else
-        print_hand();
+        print_hand_2d();
 }
 
 void Player::draw_two(Deck& deck) { // used at the start of player's turn. makes printing prettier :p
@@ -84,8 +84,8 @@ void Player::draw_two(Deck& deck) { // used at the start of player's turn. makes
         hand_value += card.get_points();
     }
 
-    std::cout << get_name() << "'s hand: ";
-    print_hand();
+    std::cout << get_name() << "'s hand:\n";
+    print_hand_2d();
 }
 
 void Player::print_hand() {
@@ -154,3 +154,41 @@ void Player::draw_fake(Card& card) {
     else
         print_hand();
 } 
+
+void Player::print_hand_2d() {
+    //(1)
+    for (small_int i = 0; i < cards_in_hand; i++) {
+        hand[i].print_one(); std::cout << "   "; 
+    } 
+    std::cout << std::endl;
+    //(2)
+    for (small_int i = 0; i < cards_in_hand; i++) {
+        hand[i].print_two(); std::cout << "   "; 
+    }  
+    std::cout << std::endl;
+    //(3)
+    for (small_int i = 0; i < cards_in_hand; i++) {
+        hand[i].print_three(); std::cout << "   "; 
+    }
+    std::cout << std::endl;
+    //(4)
+    for (small_int i = 0; i < cards_in_hand; i++) {
+        hand[i].print_four(); std::cout << "   "; 
+    }
+    std::cout << std::endl;
+    //(3)
+    for (small_int i = 0; i < cards_in_hand; i++) {
+        hand[i].print_three(); std::cout << "   "; 
+    }
+    std::cout << std::endl;
+    //(5)
+    for (small_int i = 0; i < cards_in_hand; i++) {
+        hand[i].print_five(); std::cout << "   "; 
+    }
+    std::cout << std::endl;
+    //(6)
+    for (small_int i = 0; i < cards_in_hand; i++) {
+        hand[i].print_six(); std::cout << "   "; 
+    }
+    std::cout << endl << "Hand value: " << get_hand_value() << endl;
+}

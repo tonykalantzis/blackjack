@@ -53,15 +53,9 @@ void Card::set_status(Status s) {
     status = s;
 }
 
+//----------------PRINTING
+
 void Card::print_2d() {
-    // ╔═════════╗ (1) 11x7 total (9 between) 
-    // ║10       ║ (2) *align
-    // ║         ║ (3)
-    // ║    ♠    ║ (4)
-    // ║         ║ (3)'
-    // ║       10║ (2)' *align
-    // ╚═════════╝ (1)'
-    
     // ╔-201 ═-205 ╗-187 ║-186 ╝-188 ╚-200
     // (1)
     std::cout << "╔"/* char(201)*/;
@@ -95,4 +89,52 @@ void Card::print_2d() {
     std::cout << "╝"/*char(188)*/ << std::endl;
 
     return;
+}
+
+    // ╔═════════╗ (1) 11x7 total (9 between) 
+    // ║10       ║ (2)
+    // ║         ║ (3)
+    // ║    ♠    ║ (4)
+    // ║         ║ (3)
+    // ║       10║ (5)
+    // ╚═════════╝ (6)
+
+void Card::print_one() {
+     std::cout << "╔"/* char(201)*/;
+    for(int i = 0 ; i < 9 ; i++) {
+        std::cout << "═" /*char(205)*/;
+    }
+    std::cout << "╗";/*char(187)*/
+}
+
+void Card::print_two() {
+    std::cout << "║"/*char(186)*/;
+    if (rank == 10)
+        std::cout << " 10      " << "║";//10 and 7 spaces 
+    else 
+        std::cout << " " << get_rank() << "       " << "║"/*char(186)*/;
+}
+
+void Card::print_three() {
+    std::cout << "║"/*char(186)*/ << "         " << "║"/*char(186)*/;
+}
+
+void Card::print_four() {
+    std::cout << "║"/*char(186)*/ << "    " << get_suit() << "    " << "║"/*char(186)*/;
+}
+
+void Card::print_five() {
+    std::cout << "║"/*char(186)*/;
+    if (rank == 10)
+        std::cout << "      10 " << "║";//10 and 7 spaces 
+    else 
+        std::cout << "       " << get_rank() << " " << "║"/*char(186)*/;
+}
+
+void Card::print_six() {
+    std::cout << "╚"/*char(200)*/;
+    for(int i = 0 ; i < 9 ; i++) {
+        std::cout << "═"/*char(═)*/;
+    }
+    std::cout << "╝"/*char(188)*/;
 }

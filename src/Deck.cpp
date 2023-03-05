@@ -1,25 +1,33 @@
 #include "Deck.hpp"
 
+#define NUM_OF_CARDS 52
+
 Deck::Deck() {
+    cards = new Card[NUM_OF_CARDS];
+
     for (int s = 0; s < 4; s++)
         for (int i = 0 ; i <= 12 ; i++)  
-            card[i+s*13].init((Card::Rank)(i + 1), (Card::Suit)s);
+            cards[i+s*13].init((Card::Rank)(i + 1), (Card::Suit)s);
 
     top_card_pos = 0;
 }
 
+Deck::~Deck() {
+    delete[] cards;
+}
+
 void Deck::shuffle_deck() {
     std::srand(std::time(NULL));
-    std::random_shuffle(card, card + 52);
+    std::random_shuffle(cards, cards + 52);
 }
 
 Card& Deck::get_top_card() {
-    top_card_pos++;
-    return card[top_card_pos-1];
-}
+    // check if the deck is exhausted => reshuffle
+    if (top_card_pos == 52) {
+        shuffle_deck();
+        top_card_pos = 0;
+    }
 
-void Deck::print_deck() {
-    for (small_int i = top_card_pos; i < 52; i++)
-        std::cout << card[i].get_rank() << card[i].get_suit() << " ";
-    std::cout << std::endl;
+    top_card_pos++;
+    return cards[top_card_pos-1];
 }

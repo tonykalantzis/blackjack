@@ -3,14 +3,17 @@
 #define MAX_PLAYERS 4
 
 Blackjack::Blackjack() {
-    // intro
     std::cout << "Welcome to Blackjack!" << endl << endl;
-    //shuffle the deck
-    deck.shuffle_deck();
+    
+    deck = new Deck;
+    deck->shuffle_deck();
+
+    dealer = new Dealer;
 }
 
 Blackjack::~Blackjack() {
-    // free players at table
+    delete deck;
+    delete dealer;
     for (auto p : players)
         delete p;
 }
@@ -58,8 +61,8 @@ void Blackjack::round_start() {
     }
 
     // dealer always draws the first card
-    dealer.draw(deck);
-    dealer.print_hand();
+    dealer->draw(deck);
+    dealer->print_hand();
     std::cout << endl;
 }
 
@@ -145,20 +148,20 @@ void Blackjack::player_turn() {
 void Blackjack::dealer_turn() {
     std::cout << "-----Dealer's Turn-----" << endl;
     // dealer stands at 17 and above
-    while (dealer.get_hand_value() < 17) {
+    while (dealer->get_hand_value() < 17) {
         std::cout << "Dealer hits" << endl;
-        dealer.draw(deck);
-        dealer.print_hand();
+        dealer->draw(deck);
+        dealer->print_hand();
         std::cout << endl;
     }
 
     // check if dealer busted and print the appropriate message
-    if (dealer.get_hand_value() < 21)
-        std::cout << "Dealer stands at " << dealer.get_hand_value() << endl;
-    else if (dealer.get_hand_value() == 21)
+    if (dealer->get_hand_value() < 21)
+        std::cout << "Dealer stands at " << dealer->get_hand_value() << endl;
+    else if (dealer->get_hand_value() == 21)
         std::cout << "Blackjack! Dealer stands at 21" << endl;
     else {
-        dealer.set_busted(true);
+        dealer->set_busted(true);
         std::cout << "Dealer busted!" << endl;
     }
     std::cout << endl;
@@ -166,7 +169,7 @@ void Blackjack::dealer_turn() {
 
 void Blackjack::round_end() {
     // if dealer lost then all players (non-busted) win
-    if (dealer.is_busted()) {
+    if (dealer->is_busted()) {
         for (auto player : players) {
             if (!player->is_busted()) {
                 player->add_money(2 * player->get_bet());
@@ -177,7 +180,7 @@ void Blackjack::round_end() {
     else {
         for (auto player : players) {
             if (!player->is_busted()) {
-                if (dealer.get_hand_value() >= player->get_hand_value())
+                if (dealer->get_hand_value() >= player->get_hand_value())
                     std::cout << "Dealer wins..." << endl;
                 else {
                     std::cout << *player <<  " wins!" << endl;
@@ -190,9 +193,9 @@ void Blackjack::round_end() {
     }
 
     // // print the winner
-    // if (dealer.is_busted() && player->is_busted())
+    // if (dealer->is_busted() && player->is_busted())
     //     std::cout << "No one wins..." << endl;
-    // else if (player->is_busted() || (!dealer.is_busted() && dealer.get_hand_value() >= player->get_hand_value()))
+    // else if (player->is_busted() || (!dealer->is_busted() && dealer->get_hand_value() >= player->get_hand_value()))
     //     std::cout << "Dealer wins..." << endl;
     // else {
     //     player->add_money(2 * player->get_bet());
@@ -231,6 +234,6 @@ bool Blackjack::end() {
     // else, reset all hands and return false 
     for (auto player : players)
         player->reset();
-    dealer.reset();
+    dealer->reset();
     return false;
 }

@@ -7,12 +7,13 @@
 class Deck {
 public:
     Deck();
-    
+    ~Deck();
+
     void shuffle_deck();
     Card& get_top_card();
-    void print_deck();
 
 private:
-    Card card[52];
+    // array with cards
+    Card* cards;
     small_int top_card_pos;
 };

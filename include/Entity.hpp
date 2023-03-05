@@ -18,7 +18,7 @@ public:
     int get_cards_in_hand() const;
     void print_hand();
 
-    void draw(Deck&);
+    void draw(Deck* deck);
 
     void set_busted(bool);
     bool is_busted() const;

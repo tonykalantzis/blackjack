@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::Player() : Entity() {
+Player::Player() : Entity("Player") {
     round_bet = 0;
 }
 

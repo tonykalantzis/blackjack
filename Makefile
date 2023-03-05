@@ -7,7 +7,7 @@ MAKE += --silent
 
 # compiler options
 CXX = g++
-CXXFLAGS = -Wall -Werror -g -O0 -I$(INCLUDE)
+CXXFLAGS = -Wall -Werror -g -O3 -I$(INCLUDE)
 
 # executable
 EXEC = blackjack

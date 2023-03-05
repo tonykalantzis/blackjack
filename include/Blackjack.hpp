@@ -7,6 +7,8 @@
 class Blackjack {
 public:
     Blackjack();
+    ~Blackjack();
+
     void start();
     void round_start();
     void player_turn();
@@ -14,7 +16,9 @@ public:
     void round_end();
     bool end();
 private:
-    Player player1;
     Dealer dealer;
     Deck deck;
+
+    // multiple players; store them in a vector
+    vector<Player*> players;
 };

@@ -9,7 +9,7 @@
 
 class Entity {
 public:
-    Entity();
+    Entity(string type);
 
     void set_name(string given_name);
     string get_name() const;

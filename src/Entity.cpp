@@ -1,7 +1,6 @@
 #include "Entity.hpp"
 
-Entity::Entity() {
-    name = "entity"; // default name
+Entity::Entity(string type) : name(type) {
     cards_in_hand = 0;
     money = STARTING_MONEY;
     hand_value = 0;

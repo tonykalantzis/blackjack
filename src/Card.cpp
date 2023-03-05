@@ -100,7 +100,7 @@ void Card::print_2d() {
     // ╚═════════╝ (6)
 
 void Card::print_one() {
-     std::cout << "╔"/* char(201)*/;
+    std::cout << "╔"/* char(201)*/;
     for(int i = 0 ; i < 9 ; i++) {
         std::cout << "═" /*char(205)*/;
     }

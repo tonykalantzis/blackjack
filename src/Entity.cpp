@@ -73,8 +73,8 @@ void Entity::print_hand() {
     std::cout << endl << "Hand value: " << get_hand_value() << endl;
 }
 
-void Entity::draw(Deck &deck) {
-    Card card = deck.get_top_card();
+void Entity::draw(Deck* deck) {
+    Card card = deck->get_top_card();
     hand.push_back(card);
     cards_in_hand++;
     hand_value += card.get_points();

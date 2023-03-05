@@ -16,8 +16,8 @@ public:
     void round_end();
     bool end();
 private:
-    Dealer dealer;
-    Deck deck;
+    Dealer* dealer;
+    Deck* deck;
 
     // multiple players; store them in a vector
     vector<Player*> players;

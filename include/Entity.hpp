@@ -17,6 +17,7 @@ public:
     int get_hand_value() const;
     int get_cards_in_hand() const;
     void print_hand();
+    void print_dealer_hand();
 
     void draw(Deck* deck);
 

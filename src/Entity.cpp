@@ -38,39 +38,63 @@ void Entity::print_hand() {
     std::cout << name << "'s hand:\n";
     //(1)
     for (small_int i = 0; i < cards_in_hand; i++) {
-        hand[i].print_one(); std::cout << "   "; 
+        hand[i].print_one(); std::cout << " "; 
     } 
     std::cout << std::endl;
     //(2)
     for (small_int i = 0; i < cards_in_hand; i++) {
-        hand[i].print_two(); std::cout << "   "; 
+        hand[i].print_two(); std::cout << " "; 
     }  
     std::cout << std::endl;
     //(3)
     for (small_int i = 0; i < cards_in_hand; i++) {
-        hand[i].print_three(); std::cout << "   "; 
+        hand[i].print_three(); std::cout << " "; 
     }
     std::cout << std::endl;
     //(4)
     for (small_int i = 0; i < cards_in_hand; i++) {
-        hand[i].print_four(); std::cout << "   "; 
+        hand[i].print_four(); std::cout << " "; 
     }
     std::cout << std::endl;
     //(3)
     for (small_int i = 0; i < cards_in_hand; i++) {
-        hand[i].print_three(); std::cout << "   "; 
+        hand[i].print_three(); std::cout << " "; 
     }
     std::cout << std::endl;
     //(5)
     for (small_int i = 0; i < cards_in_hand; i++) {
-        hand[i].print_five(); std::cout << "   "; 
+        hand[i].print_five(); std::cout << " "; 
     }
     std::cout << std::endl;
     //(6)
     for (small_int i = 0; i < cards_in_hand; i++) {
-        hand[i].print_six(); std::cout << "   "; 
+        hand[i].print_six(); std::cout << " "; 
     }
     std::cout << endl << "Hand value: " << get_hand_value() << endl;
+}
+
+void Entity::print_dealer_hand() {
+    if(cards_in_hand == 1) {
+        std::cout << name << "'s hand:\n";
+        //(1)
+        hand[0].print_one(); std::cout << " " << "╔═════════╗\n"; 
+        //(2)
+        hand[0].print_two(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n";   
+        //(3)
+        hand[0].print_three(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n"; 
+        //(4)
+        hand[0].print_four(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n"; 
+        //(3)
+        hand[0].print_three(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n";
+        //(5)
+        hand[0].print_five(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n"; 
+        //(6)
+        hand[0].print_six(); std::cout << " " << "╚═════════╝\n"; 
+        //hand value
+        std::cout << "Hand value: " << get_hand_value() << endl;
+    } else {
+        print_hand();
+    }
 }
 
 void Entity::draw(Deck* deck) {

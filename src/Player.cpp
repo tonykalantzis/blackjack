@@ -32,23 +32,3 @@ int Player::get_money() const {
 void Player::add_money(int m) {
     money += m;
 }
-
-// void Player::draw_fake(Card& card) {
-    
-
-//     hand.push_back(card);
-//     cards_in_hand++;
-//     if (card.get_rank() == "A") {
-//         std::cout << "Number of Aces: " << Player::number_of_aces << std::endl;
-//         Player::number_of_aces++;
-//         if (Player::number_of_aces > 1)
-//             hand_value -= 10;
-//     }
-//     hand_value += card.get_points();
-
-//     std::cout << get_name() << "'s hand: ";
-//     if (get_name() == "Dealer")
-//         print_dealer_hand();
-//     else
-//         print_hand();
-// } 

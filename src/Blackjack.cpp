@@ -67,7 +67,7 @@ void Blackjack::round_start() {
 
     // dealer always draws the first card
     dealer->draw(deck);
-    dealer->print_dealer_hand();
+    dealer->print_hand();
     std::cout << endl;
 }
 

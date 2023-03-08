@@ -10,14 +10,14 @@
 class Entity {
 public:
     Entity(string type);
+    virtual ~Entity();
 
     void set_name(string given_name);
     string get_name() const;
 
     int get_hand_value() const;
     int get_cards_in_hand() const;
-    void print_hand();
-    void print_dealer_hand();
+    virtual void print_hand();
 
     void draw(Deck* deck);
 

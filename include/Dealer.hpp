@@ -4,4 +4,5 @@
 class Dealer : public Entity {
 public:
     Dealer();
+    void print_hand();
 };

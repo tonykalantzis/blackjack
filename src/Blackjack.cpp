@@ -24,6 +24,11 @@ void Blackjack::start() {
     do {
         std::cout << "How many players want a sit at the table ? (1-4)" << endl;
         std::cin >> n_players;
+        
+        if (!std::cin) { // if cin failed (caused by user entering a string)
+            std::cin.clear();   // clear cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad input
+        }
     } while (n_players < 1 || n_players > MAX_PLAYERS);
     std::cout << endl;
 
@@ -62,7 +67,7 @@ void Blackjack::round_start() {
 
     // dealer always draws the first card
     dealer->draw(deck);
-    dealer->print_dealer_hand();
+    dealer->print_hand();
     std::cout << endl;
 }
 
@@ -191,16 +196,6 @@ void Blackjack::round_end() {
                 std::cout << "Dealer wins..." << endl;
         }
     }
-
-    // // print the winner
-    // if (dealer->is_busted() && player->is_busted())
-    //     std::cout << "No one wins..." << endl;
-    // else if (player->is_busted() || (!dealer->is_busted() && dealer->get_hand_value() >= player->get_hand_value()))
-    //     std::cout << "Dealer wins..." << endl;
-    // else {
-    //     player->add_money(2 * player->get_bet());
-    //     std::cout << *player <<  " wins!" << endl;
-    // }
 }
 
 bool Blackjack::end() {

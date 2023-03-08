@@ -8,6 +8,8 @@ Entity::Entity(string type) : name(type) {
     number_of_aces = 0;
 }
 
+Entity::~Entity() {} // used to bypass -Werror
+
 void Entity::set_name(string given_name) {
     name = given_name;
 }
@@ -71,30 +73,6 @@ void Entity::print_hand() {
         hand[i].print_six(); std::cout << " "; 
     }
     std::cout << endl << "Hand value: " << get_hand_value() << endl;
-}
-
-void Entity::print_dealer_hand() {
-    if(cards_in_hand == 1) {
-        std::cout << name << "'s hand:\n";
-        //(1)
-        hand[0].print_one(); std::cout << " " << "╔═════════╗\n"; 
-        //(2)
-        hand[0].print_two(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n";   
-        //(3)
-        hand[0].print_three(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n"; 
-        //(4)
-        hand[0].print_four(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n"; 
-        //(3)
-        hand[0].print_three(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n";
-        //(5)
-        hand[0].print_five(); std::cout << " " << "║ ▓▒▓▒▓▒▓ ║\n"; 
-        //(6)
-        hand[0].print_six(); std::cout << " " << "╚═════════╝\n"; 
-        //hand value
-        std::cout << "Hand value: " << get_hand_value() << endl;
-    } else {
-        print_hand();
-    }
 }
 
 void Entity::draw(Deck* deck) {

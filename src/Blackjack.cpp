@@ -24,6 +24,11 @@ void Blackjack::start() {
     do {
         std::cout << "How many players want a sit at the table ? (1-4)" << endl;
         std::cin >> n_players;
+        
+        if (!std::cin) { // if cin failed (caused by user entering a string)
+            std::cin.clear();   // clear cin
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad input
+        }
     } while (n_players < 1 || n_players > MAX_PLAYERS);
     std::cout << endl;
 

@@ -196,16 +196,6 @@ void Blackjack::round_end() {
                 std::cout << "Dealer wins..." << endl;
         }
     }
-
-    // // print the winner
-    // if (dealer->is_busted() && player->is_busted())
-    //     std::cout << "No one wins..." << endl;
-    // else if (player->is_busted() || (!dealer->is_busted() && dealer->get_hand_value() >= player->get_hand_value()))
-    //     std::cout << "Dealer wins..." << endl;
-    // else {
-    //     player->add_money(2 * player->get_bet());
-    //     std::cout << *player <<  " wins!" << endl;
-    // }
 }
 
 bool Blackjack::end() {

@@ -1,3 +1,4 @@
 # The Blackjack Project **♣**
-TOP Blackjack
-καλή αρχή :)
+TOP Blackjack tty game :)
+
+## Authors

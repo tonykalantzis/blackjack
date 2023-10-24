@@ -10,7 +10,12 @@ int Player::get_bet() const {
 
 void Player::input_bet() {
     bool bad_input = false;
-    std::cout << "Please give your bet: ";
+
+    printf("    ╔═════════════╗\n");
+    printf("    ║Give your bet║\n");
+    printf("    ╠═════════════╝\n");
+    printf("    ╚> ");
+
     std::cin >> round_bet;
 
     if (!std::cin) { // if cin failed (caused by user entering a string)
@@ -20,9 +25,13 @@ void Player::input_bet() {
     }
 
     while (money < round_bet || round_bet <= 0 || bad_input) {
-        std::cout << "Illegal bet. Please give a legal bet: ";
+        printf("    ╔══════════════════════════════════════╗\n");
+        printf("    ║Illegal bet. Please give a legal bet. ║\n");
+        printf("    ╠══════════════════════════════════════╝\n");
+        printf("    ╚> ");
+
         std::cin >> round_bet;
-        
+
         if (!std::cin) { // if cin failed (caused by user entering a string)
             std::cin.clear();   // clear cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad input

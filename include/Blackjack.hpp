@@ -9,6 +9,7 @@ public:
     Blackjack();
     ~Blackjack();
 
+    void render();
     void start();
     void round_start();
     void player_turn();

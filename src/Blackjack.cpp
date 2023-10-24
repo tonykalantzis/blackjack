@@ -1,10 +1,34 @@
 #include "Blackjack.hpp"
+#include <cstdlib>
 
 #define MAX_PLAYERS 4
 
+
+void Blackjack::render() {
+    #ifdef _WIN32
+        if(system("cls") == 0);
+    #else
+        if(system("clear") == 0);
+    #endif
+    string welcome_message = R"(
+     ________  ___       ________  ________  ___  __          ___  ________  ________  ___  __
+    |\   __  \|\  \     |\   __  \|\   ____\|\  \|\  \       |\  \|\   __  \|\   ____\|\  \|\  \
+    \ \  \|\ /\ \  \    \ \  \|\  \ \  \___|\ \  \/  /|_     \ \  \ \  \|\  \ \  \___|\ \  \/  /|_
+     \ \   __  \ \  \    \ \   __  \ \  \    \ \   ___  \  __ \ \  \ \   __  \ \  \    \ \   ___  \
+      \ \  \|\  \ \  \____\ \  \ \  \ \  \____\ \  \\ \  \|\  \\_\  \ \  \ \  \ \  \____\ \  \\ \  \
+       \ \_______\ \_______\ \__\ \__\ \_______\ \__\\ \__\ \________\ \__\ \__\ \_______\ \__\\ \__\
+        \|_______|\|_______|\|__|\|__|\|_______|\|__| \|__|\|________|\|__|\|__|\|_______|\|__| \|__|
+
+                                                                     )";
+
+
+    std::cout << welcome_message <<" \033[90mBy TonyKal, MikeRaphK and gsofron.\033[0m" << endl << endl;
+}
+
 Blackjack::Blackjack() {
-    std::cout << "Welcome to Blackjack!" << endl << endl;
-    
+
+    render();
+
     deck = new Deck;
     deck->shuffle_deck();
 
@@ -22,9 +46,14 @@ void Blackjack::start() {
     // starting num of players sitting
     int n_players;
     do {
-        std::cout << "How many players want a sit at the table ? (1-4)" << endl;
+        string message = R"(
+    ╔════════════════════════════════════╗
+    ║How many are we playin' today? (1-4)║
+    ╠════════════════════════════════════╝
+    ╚> )";
+        std::cout << message;
         std::cin >> n_players;
-        
+
         if (!std::cin) { // if cin failed (caused by user entering a string)
             std::cin.clear();   // clear cin
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad input
@@ -32,26 +61,26 @@ void Blackjack::start() {
     } while (n_players < 1 || n_players > MAX_PLAYERS);
     std::cout << endl;
 
+    render();
+
     // info for players
     for (int i = 0; i < n_players; i++) {
 
         Player* new_player = new Player;
 
-        // get the player's name
-        std::cout << "Player " << i+1 << " - Enter your name: ";
+        printf("\n    ╔════════════════════════╗\n");
+        printf("    ║Player %d give me a name ║\n",i+1);
+        printf("    ╠════════════════════════╝\n");
+        printf("    ╚> ");
+
         string name;
 
-        ////////////////////////////////////////////////////////////////////////////
-        // UNKNOWN ERROR; If we don't put this
-        // then we don't input the name of Player 1
         if (i == 0)
             getline(std::cin, name);
-        ////////////////////////////////////////////////////////////////////////////
 
         getline(std::cin, name);
         new_player->set_name(name);
-        std::cout << *new_player << " has just sat down. Starting money: " << new_player->get_money() << endl << endl;
-    
+
         players.push_back(new_player);
     }
 }
@@ -59,8 +88,24 @@ void Blackjack::start() {
 void Blackjack::round_start() {
     // all players draw/play before Dealer
     for (auto player : players) {
+        render();
         // player inputs bet at the start of the round
-        std::cout << *player << "'s money: " << player->get_money() << endl;
+        printf("\n    ╔");
+        for(char c : player->get_name()) {
+            std::cout << "═";
+            (void)c; //use the variable for the warning
+        }
+
+        printf("══════════╗\n");
+        std::cout <<"    ║"<< player->get_name() << " has ";
+        printf("\033[32m%4d$\033[0m║\n", player->get_money());
+        printf("    ╚");
+        for(char c : player->get_name()) {
+            std::cout << "═";
+            (void)c; //use the variable for the warning
+        }
+        printf("══════════╝\n");
+
         player->input_bet();
         std::cout << endl;
     }
@@ -119,7 +164,7 @@ void Blackjack::player_turn() {
             else if (choice == "3" && player->get_cards_in_hand() == 2) {
                 // check if bet is legal
                 if (player->get_bet() > player->get_money())
-                    std::cout << "Not enough money to double bet." << endl << endl; 
+                    std::cout << "Not enough money to double bet." << endl << endl;
                 else {
                     std::cout << *player << " doubles!" << endl;
                     player->double_bet();
@@ -145,12 +190,13 @@ void Blackjack::player_turn() {
 
         if (!player->is_busted())
             std::cout << *player << " stands at " << player->get_hand_value() << endl;
-        
+
         std::cout << endl;
     }
 }
 
 void Blackjack::dealer_turn() {
+
     std::cout << "-----Dealer's Turn-----" << endl;
     // dealer stands at 17 and above
     while (dealer->get_hand_value() < 17) {
@@ -225,8 +271,8 @@ bool Blackjack::end() {
     // if player quits, return true
     if (play == "n" || play == "N")
         return true;
-    
-    // else, reset all hands and return false 
+
+    // else, reset all hands and return false
     for (auto player : players)
         player->reset();
     dealer->reset();

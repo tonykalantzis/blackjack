@@ -3,6 +3,7 @@
 #include "common.hpp"
 #include <bits/stdc++.h>
 #include "Card.hpp"
+#include <random>     // For std::mt19937 and std::random_device
 
 class Deck {
 public:

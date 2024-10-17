@@ -17,8 +17,12 @@ Deck::~Deck() {
 }
 
 void Deck::shuffle_deck() {
+
+    std::random_device rd;   // Seed generator
+    std::mt19937 g(rd());    // Mersenne Twister RNG
+
     std::srand(std::time(NULL));
-    std::random_shuffle(cards, cards + 52);
+    std::shuffle(cards, cards + 52, g);
 }
 
 Card& Deck::get_top_card() {

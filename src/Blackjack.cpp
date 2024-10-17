@@ -22,7 +22,7 @@ void Blackjack::render() {
                                                                      )";
 
 
-    std::cout << welcome_message <<" \033[90mBy TonyKal, MikeRaphK and gsofron.\033[0m" << endl << endl;
+    std::cout << welcome_message <<" \033[90mBy tonykalantzis, MikeRaphK and gsofron.\033[0m" << endl << endl;
 }
 
 Blackjack::Blackjack() {
